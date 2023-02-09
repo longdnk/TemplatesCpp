@@ -45,11 +45,15 @@ void TimMatHang(MatHang a[], int n) {
     printf("Khong tim thay mat hang dung yeu cau\n");
 }
 
+int maxFind(int a, int b) {
+    return a > b ? a : b;
+}
+
 int timMaxDonGia(MatHang a[], int n) {
     int max = 0;
     for (int i = 0; i < n; ++i) {
         if (max < a[i].donGia) {
-            max = a[i].donGia;
+            max = maxFind(a[i].donGia, max);
         }
     }
     return max;
