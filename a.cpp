@@ -1,60 +1,80 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-typedef vector<vector<int64_t>> matrix;
+
+struct Node {
+    int key, priority;
+    Node *next;
+
+};
+
+struct PriorityQueue {
+    Node *head;
+};
+
+PriorityQueue *init() {
+    PriorityQueue *pq = new PriorityQueue;
+    pq->head = nullptr;
+    return pq;
+}
+
+Node *createNode(int d, int p) {
+    Node *temp = new Node;
+    temp->key = d;
+    temp->priority = p;
+    temp->next = nullptr;
+    return temp;
+}
+
+int peek(PriorityQueue *pq) {
+    return pq->head->key;
+}
+
+bool isEmpty(PriorityQueue *pq) {
+    return pq->head == nullptr;
+}
+
+void pop(PriorityQueue *&pq) {
+    if (!isEmpty(pq)) {
+        cout << peek(pq) << '\n';
+        Node *tmp = pq->head;
+        pq->head = tmp->next;
+        tmp->next = nullptr;
+        delete (tmp);
+    }
+}
+
+void push(PriorityQueue *&pq, int d, int p) {
+    Node *start = pq->head;
+
+    Node *temp = createNode(d, p);
+    if (isEmpty(pq)) {
+        pq->head = temp;
+    } else {
+        if (pq->head->priority > p) {
+            temp->next = pq->head;
+            pq->head = temp;
+            return;
+        } else {
+            while (start->next != nullptr && start->next->priority < p) {
+                start = start->next;
+            }
+            temp->next = start->next;
+            start->next = temp;
+        }
+    }
+}
 
 int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    auto multiply = [&](matrix &F, matrix M) -> void {
-        int64_t x, y, z, w;
-        x = (int64_t) F[0][0] * M[0][0] + F[0][1] * M[1][0];
-        y = (int64_t) F[0][0] * M[0][1] + F[0][1] * M[1][1];
-        z = (int64_t) F[1][0] * M[0][0] + F[1][1] * M[1][0];
-        w = (int64_t) F[1][0] * M[0][1] + F[1][1] * M[1][1];
-
-        F[0][0] = x, F[0][1] = y, F[1][0] = z, F[1][1] = w;
-    };
-
-    function<auto(matrix &, int n) -> void> power = [&](matrix &f, int n) -> void {
-        if (n == 0 || n == 1) {
-            return;
-        }
-        matrix M {{ 1, 1 },
-                  { 1, 0 }};
-
-        power(f, n >> 1);
-        multiply(f, f);
-
-        if (n & 1) {
-            multiply(f, M);
-        }
-    };
-
-    auto fibonacci = [&](int n) -> int64_t {
-        matrix f {{ 1, 1 },
-                  { 1, 0 }};
-        if (n == 0) {
-            return 0;
-        }
-        power(f, n - 1);
-
-        return f[0][0];
-    };
-
-    auto findNumber = [&](int x) -> int {
-        int l = 1, r = x, mid, res = -1;
-        while (l <= r) {
-            mid = (r + l) >> 1;
-            if (fibonacci(mid) <= x) {
-                res = mid;
-                l = mid + 1;
-            } else {
-                r = mid - 1;
-            }
-        }
-        return res;
-    };
-    cout << findNumber(100) << '\n';
+    PriorityQueue *pq = init();
+    push(pq, 4, 1);
+    push(pq, 5, 2);
+    push(pq, 6, 3);
+    push(pq, 7, 0);
+    while (!isEmpty(pq)) {
+        pop(pq);
+    }
 }
