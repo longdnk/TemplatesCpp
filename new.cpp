@@ -252,14 +252,4 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    Node *head;
-    init(head);
-    addLast(head, 10);
-    addLast(head, 20);
-    addLast(head, 30);
-    addAfter(head, 30, 40);
-    output(head);
-    addNodeAtK(head, 100, 4);
-    deleteNodeAtK(head, 5);
-    output(head);
 }
