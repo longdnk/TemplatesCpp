@@ -6,4 +6,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
+    string s;
+    cin >> s;
+    cout << s << "\n";
 }

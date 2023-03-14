@@ -1,80 +1,100 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+const int maxN = 1e6 + 9;
 
-struct Node {
-    int key, priority;
-    Node *next;
+bool memo[maxN][15];
+int ans[maxN], n, m, q, u, v, d, c;
+vector<vector<int>> a;
 
-};
+struct Stack {
+    struct Node {
+        struct query {
+            int u, d, c;
+        } data;
+        Node *next;
+    } *top;
+    typedef Stack stack;
+    typedef Stack::Node node;
+    typedef node::query query;
 
-struct PriorityQueue {
-    Node *head;
-};
-
-PriorityQueue *init() {
-    PriorityQueue *pq = new PriorityQueue;
-    pq->head = nullptr;
-    return pq;
-}
-
-Node *createNode(int d, int p) {
-    Node *temp = new Node;
-    temp->key = d;
-    temp->priority = p;
-    temp->next = nullptr;
-    return temp;
-}
-
-int peek(PriorityQueue *pq) {
-    return pq->head->key;
-}
-
-bool isEmpty(PriorityQueue *pq) {
-    return pq->head == nullptr;
-}
-
-void pop(PriorityQueue *&pq) {
-    if (!isEmpty(pq)) {
-        cout << peek(pq) << '\n';
-        Node *tmp = pq->head;
-        pq->head = tmp->next;
-        tmp->next = nullptr;
-        delete (tmp);
+    stack *initStack() {
+        stack *s = new stack;
+        s->top = nullptr;
+        return s;
     }
-}
 
-void push(PriorityQueue *&pq, int d, int p) {
-    Node *start = pq->head;
+    node *createNode(query data) {
+        node *p = new node;
+        p->data = data;
+        p->next = nullptr;
+        return p;
+    }
 
-    Node *temp = createNode(d, p);
-    if (isEmpty(pq)) {
-        pq->head = temp;
-    } else {
-        if (pq->head->priority > p) {
-            temp->next = pq->head;
-            pq->head = temp;
-            return;
-        } else {
-            while (start->next != nullptr && start->next->priority < p) {
-                start = start->next;
-            }
-            temp->next = start->next;
-            start->next = temp;
+    void push(stack *&s, query data) {
+        node *p = createNode(data);
+        p->next = s->top;
+        s->top = p;
+    }
+
+    bool isEmpty(stack *s) {
+        return s->top == nullptr;
+    }
+
+    void pop(stack *&s) {
+        if (!isEmpty(s)) {
+            node *p = s->top;
+            s->top = p->next;
+            p->next = nullptr;
+            delete p;
         }
     }
+};
+
+void dfs(int u, int d, int c) {
+    if (memo[u][d] || d < 0) {
+        return;
+    }
+    memo[u][d] = true;
+    if (!ans[u]) {
+        ans[u] = c;
+    }
+    for (auto v: a[u]) {
+        dfs(v, d - 1, c);
+    }
+}
+
+void resolve(Stack *s) {
+    auto [u, d, c] = s->top->data;
+    dfs(u, d, c);
+    s->pop(s);
 }
 
 int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    PriorityQueue *pq = init();
-    push(pq, 4, 1);
-    push(pq, 5, 2);
-    push(pq, 6, 3);
-    push(pq, 7, 0);
-    while (!isEmpty(pq)) {
-        pop(pq);
+    cin >> n >> m;
+
+    Stack *s = s->initStack();
+    a = *new vector<vector<int>>(n + 1);
+
+    for (int i = 1; i <= m; ++i) {
+        cin >> u >> v;
+        a[u].emplace_back(v);
+        a[v].emplace_back(u);
+    }
+
+    cin >> q;
+
+    for (int i = 1; i <= q; ++i) {
+        cin >> u >> d >> c;
+        s->push(s, { u, d, c });
+    }
+    while (!s->isEmpty(s)) {
+        resolve(s);
+    }
+    for (int i = 1; i <= n; ++i) {
+        cout << ans[i] << '\n';
     }
 }
