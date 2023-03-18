@@ -3,7 +3,7 @@
 using namespace std;
 
 void sortArray(int a[], int n) {
-    for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < n; ++i) {
 		for (int j = i + 1; j < n; ++j) {
 			if (a[i] > a[j]) {
 				int tmp = a[i];
@@ -24,7 +24,7 @@ int countElement(int a[], int n, int x) {
 	return cnt;
 }
 
-void removeDuplicate(int a[], int &n) {
+void deleteDuplicate(int a[], int &n) {
 	int *b = new int[n + 1];
 	int index = 0;
 	for (int i = 0; i < n; ++i) {
@@ -44,26 +44,34 @@ void printElement(int a[], int n, int k) {
 		int A = a[i];
 		int B = a[i + 1];
 		if (A <= k && k <= B) {
-			cout << A << ' ' << B << '\n';	
+			cout << A << ' ' << B << '\n';
 		}
 	}
 }
 
+void output(int a[], int n) {
+	for (int i = 0; i < n; ++i) {
+		cout << a[i] << ' ';
+	}
+	cout << '\n';
+}
+
 int32_t main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-	int a[] = { 5, 1, 5, 10, 7, 3 };
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	cout.tie(nullptr);
+	int a[] = { 10, 1, 5, 3, 5, 7 };
 	int n = sizeof(a) / sizeof(a[0]);
+	cout << "Before sort" << '\n';
+	output(a, n);
 	sortArray(a, n);
-	for (int i = 0; i < n; ++i) {
-		cout << a[i] << ' ';
-	}
-	cout << '\n';
-	removeDuplicate(a, n);
-	for (int i = 0; i < n; ++i) {
-		cout << a[i] << ' ';
-	}
-	cout << '\n';
-	printElement(a, n, 10);
+	cout << "After sort" << '\n';
+	output(a, n);
+	cout << "Before delete" << '\n';
+	output(a, n);
+	deleteDuplicate(a, n);
+	cout << "Afer delete" << '\n';
+	output(a, n);
+	cout << "All element" << '\n';
+	printElement(a, n, 4);
 }

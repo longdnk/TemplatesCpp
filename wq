@@ -1,0 +1,27 @@
+update excercise
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	deleted:    ChuoiKyTu
+#	deleted:    ChuoiKyTu.cpp
+#	deleted:    KiemTra_De1.cpp
+#	deleted:    KiemTra_De2.cpp
+#	deleted:    KieuStruct
+#	deleted:    KieuStruct.cpp
+#	deleted:    KieuStruct.exe
+#	modified:   Makefile
+#	deleted:    Mang2Chieu
+#	deleted:    Mang2Chieu.cpp
+#	deleted:    Mang2Chieu.exe
+#	modified:   ar.cpp
+#	deleted:    dequy.cpp
+#
+# Untracked files:
+#	ar
+#	devices
+#	devices.cpp
+#
