@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 #define null NULL
 using namespace std;
@@ -33,7 +33,7 @@ void addLast(Node *&head, int x) {
 	Node *p = createNode(x);
 	p->next = null;
 	if (head == null) {
-//		addFirst(head, x)
+		//		addFirst(head, x)
 		p->prev = null;
 		head = p;
 	}
@@ -120,9 +120,9 @@ void deleteNode(Node *&head, int v) {
 					deleteFirst(head);
 				}
 				else {
-//					cout << prev->value << ' ' << p->value << '\n';
+					//					cout << prev->value << ' ' << p->value << '\n';
 					prev->next = p->next;
-//					prev->prev = p->next->prev;
+					//					prev->prev = p->next->prev;
 					p->next = null;
 					delete p;
 				}
@@ -159,18 +159,18 @@ int32_t main() {
 	cout.tie(nullptr);
 	Node *head;
 	init(head);
-//	addFirst(head, 10);
-//	addFirst(head, 20);
-//	addFirst(head, 30);
+	//	addFirst(head, 10);
+	//	addFirst(head, 20);
+	//	addFirst(head, 30);
 	addLast(head, 10);
 	addLast(head, 20);
 	addLast(head, 30);
 	addLast(head, 40);
 	addLast(head, 50);
 	addAfter(head, 10, 60);
-//	output(head);
+	//	output(head);
 	printLast(head);
 	deleteNode(head, 60);
-//	output(head);
+	//	output(head);
 	printLast(head);
 }
