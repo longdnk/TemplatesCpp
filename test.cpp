@@ -153,24 +153,40 @@ void printLast(Node *head) {
 	}
 }
 
+// void inc() {
+// 	static int count = 0;
+	// int count = 0;
+// 	++count;
+// 	cout << count << '\n';
+// }
+
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
 	cout.tie(nullptr);
-	Node *head;
-	init(head);
+	// Node *head;
+	// init(head);
 	//	addFirst(head, 10);
 	//	addFirst(head, 20);
 	//	addFirst(head, 30);
-	addLast(head, 10);
-	addLast(head, 20);
-	addLast(head, 30);
-	addLast(head, 40);
-	addLast(head, 50);
-	addAfter(head, 10, 60);
+	// addLast(head, 10);
+	// addLast(head, 20);
+	// addLast(head, 30);
+	// addLast(head, 40);
+	// addLast(head, 50);
+	// addAfter(head, 10, 60);
 	//	output(head);
-	printLast(head);
-	deleteNode(head, 60);
+	// printLast(head);
+	// deleteNode(head, 60);
 	//	output(head);
-	printLast(head);
+	// printLast(head);
+	// float pi = 3.141;
+	// if (true) {
+		// float pi = 3.1414;
+	// 	cout << pi << '\n';
+	// 	pi = 3.14159;
+	// }
+	// cout << pi << '\n';
+	// inc();
+	// inc();
 }
