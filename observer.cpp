@@ -50,8 +50,8 @@ int32_t main() {
 	int n = sizeof(obs) / sizeof(obs[0]);
 	for (int i = 0; i < n; i++) {
 		b->addObserver(obs[i]);
-		b->notify();
 		b->removeObserver(obs[i]);
+		b->notify();
 	}
 
 }
