@@ -92,20 +92,17 @@ void deleteFirst(Node *&head) {
 void deleteLast(Node *&head) {
 	if (head != null) {
 		Node *prev = null;
-		Node *last = head;
-		while (last->next != null) {
-			prev = last;
-			last = last->next;
+		Node *p = head;
+		while (p->next != null) {
+			prev = p;
+			p = p->next;
 		}
 		if (prev == null) {
-			Node *tmp = head;
-			head = tmp->next;
-			tmp->next = null;
-			delete tmp;
+			deleteFirst(head);
 		}
 		else {
 			prev->next = null;
-			delete last;
+			delete p;
 		}
 	}
 }
@@ -120,10 +117,7 @@ void deleteNode(Node *&head, int x) {
 		}
 		if (p != null) {
 			if (prev == null) {
-				Node *tmp = head;
-				head = tmp->next;
-				tmp->next = null;
-				delete tmp;
+				deleteFirst(head);
 			}
 			else {
 				prev->next = p->next;
@@ -150,10 +144,7 @@ void deleteNodeAtK(Node *&head, int k) {
 		}
 		if (p != null) {
 			if (prev == null) {
-				Node *tmp = head;
-				head = tmp->next;
-				tmp->next = null;
-				delete tmp;
+				deleteFirst(head);
 			}
 			else {
 				prev->next = p->next;
@@ -161,6 +152,71 @@ void deleteNodeAtK(Node *&head, int k) {
 				delete p;
 			}
 		}
+	}
+}
+
+void deleteNodeHaveValue(Node *&head, int x) {
+	const int maxN = 1e5 + 9;
+	int cnt[maxN] = {};
+	Node *p = head;
+	Node *tmp = head;
+	while (p != null) {
+		cnt[p->value] = 1;
+		p = p->next;
+	}
+	while (tmp != null) {
+		if (cnt[tmp->value]) {
+			deleteNode(head, x);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void removeDuplicate_1(Node *&head) {
+	const int maxN = 1e5 + 9;
+	int cnt[maxN] = {};
+
+	Node *p = head;
+	Node *tmp = head;
+	Node *newList = null;
+
+	while (p != null) {
+		++cnt[p->value];
+		p = p->next;
+	}
+
+	while (tmp != null) {
+		if (cnt[tmp->value] == 1) {
+			addLast(newList, tmp->value);
+		}
+		tmp = tmp->next;
+	}
+	head = newList;
+}
+
+void change(int *a, int *b) {
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+bool sortList(Node *&head) {
+	if (head == null) {
+		return true;
+	}
+	else {
+		Node *current = head, *index = null;
+		while (current != null) {
+			index = current->next;
+			while (index != null) {
+				if (current->value > index->value) {
+					change(&current->value, &index->value);
+				}
+				index = index->next;
+			}
+			current = current->next;
+		}
+		return false;
 	}
 }
 
@@ -178,15 +234,21 @@ int32_t main() {
 	cout.tie(nullptr);
 	Node *head;
 	init(head);
-//	addFirst(head, 10);
-//	addFirst(head, 20);
-//	addFirst(head, 30);
+	addFirst(head, 10);
+	addFirst(head, 20);
+	addFirst(head, 30);
 	addLast(head, 10);
 	addLast(head, 20);
 	addLast(head, 30);
 	addAfter(head, 30, 40);
 	addAfterK(head, 4, 50);
 	output(head);
-//	deleteNodeAtK(head, );
+	// deleteFirst(head);
+	// deleteLast(head);
+	// deleteNode(head, 40);
+	// deleteNodeAtK(head, 5);
+	// deleteNodeHaveValue(head, 10);
+	// removeDuplicate_1(head);
+	sortList(head);
 	output(head);
 }
