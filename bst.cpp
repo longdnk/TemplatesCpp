@@ -207,6 +207,42 @@ Node *findElemento(Node *root, int x) {
 	return findElemento(root->right, x);
 }
 
+int findMaxBelow(Node *root, int value) {
+	Node *p = root;
+	int res = -1e9;
+	while (p != nullptr) {
+		if (p->value == value) {
+			return p->value;
+		}
+		else if (p->value > value) {
+			p = p->left;
+		}
+		else {
+			res = max(res, p->value);
+			p = p->right;
+		}
+	}
+	return res;
+}
+
+int findMinAbove(Node *root, int value) {
+	Node *p = root;
+	int res = 1e9;
+	while (p != nullptr) {
+		if (p->value == value) {
+			return p->value;
+		}
+		else if (p->value > value) {
+			res = min(res, p->value);
+			p = p->left;
+		}
+		else {
+			p = p->right;
+		}
+	}
+	return res;
+}
+
 int find(Node *root, int k) {
 	int res = -1e9;
 	Node *p = findElement(root, k);
