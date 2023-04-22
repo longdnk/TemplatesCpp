@@ -71,29 +71,9 @@ void interChangeSort(int a[], int n) {
 // Counting => đếm
 // Radix sort => đếm
 // 2022 - 1, 2021 - 2, 2019 - 2
-void solve() {
-	int n;
-	cin >> n;
-	auto checkPrime = [&](int n) -> bool {
-		bool flag = n > 1;
-		for (int i = 2; i * i <= n; i = i + (i & 1) + 1) {
-			if (n % i == 0) {
-				flag = false;
-				break;
-			}
-		}
-		return flag;
-	};
-	cout << (checkPrime(n) ? "YES" : "NO") << "\n";
-}
 
 int32_t main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr);
 	cout.tie(nullptr);
-	int t;
-	cin >> t;
-	while (t--) {
-		solve();
-	}
 }

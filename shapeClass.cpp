@@ -71,10 +71,7 @@ int32_t main() {
 	cin.tie(nullptr);
 	cout.tie(nullptr);
 
-	DrawingShape *ds[] = {
-			new DrawingRectangle,
-			new DrawingCircle,
-	};
+	DrawingShape *ds[] = { new DrawingRectangle, new DrawingCircle, };
 
 	// Shape *s[] = {
 	// 	new Rectangle(10, 10, 10, 10, ds[0]),
