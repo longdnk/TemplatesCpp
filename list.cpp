@@ -19,6 +19,27 @@ Node *createNode(int x) {
 	return p;
 }
 
+Node *deleteKey(Node *&head, int x) {
+	if (!head) {
+		return head;
+	}
+	while (head && head->value == x) {
+		head = head->next;
+	}
+	Node *curr = head, *prev = nullptr;
+
+	while (curr) {
+		if (curr->value == x) {
+			prev->next = curr->next;
+		}
+		else {
+			prev = curr;
+		}
+		curr = curr->next;
+	}
+	return head;
+}
+
 void addFirst(Node *&head, int x) {
 	Node *p = createNode(x);
 	p->next = head;
@@ -157,7 +178,7 @@ void deleteNodeAtK(Node *&head, int k) {
 
 void deleteNodeHaveValue(Node *&head, int x) {
 	const int maxN = 1e5 + 9;
-	int cnt[maxN] = {};
+	int cnt[maxN] = { };
 	Node *p = head;
 	Node *tmp = head;
 	while (p != null) {
@@ -174,7 +195,7 @@ void deleteNodeHaveValue(Node *&head, int x) {
 
 void removeDuplicate_1(Node *&head) {
 	const int maxN = 1e5 + 9;
-	int cnt[maxN] = {};
+	int cnt[maxN] = { };
 
 	Node *p = head;
 	Node *tmp = head;

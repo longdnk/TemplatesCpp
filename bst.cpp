@@ -295,6 +295,42 @@ int findMin(Node *root, int key) {
 	return -1;
 }
 
+bool checkSubTree(Node *root, Node *subRoot) {
+	if (root == nullptr && subRoot == nullptr) {
+		return true;
+	}
+	if (root == nullptr || subRoot == nullptr) {
+		return false;
+	}
+	if (root->value != subRoot->value) {
+		return false;
+	}
+	return checkSubTree(root->left, subRoot->left) &&
+	       checkSubTree(root->right, subRoot->right);
+}
+
+bool IsSubTree(Node *root, Node *subRoot) {
+	if (checkSubTree(root, subRoot)) {
+		return true;
+	}
+	if (root == nullptr) {
+		return false;
+	}
+	return IsSubTree(root->left, subRoot) ||
+	       IsSubTree(root->right, subRoot);
+}
+
+bool isSubTree(Node *root, int keyRoot, int keyLeft, int keyRight) {
+	if (root == nullptr) {
+		return false;
+	}
+	if (root->left != nullptr && root->right != nullptr && root->value == keyRight &&
+	    root->left->value == keyLeft && root->right->value == keyRight)
+		return true;
+	return isSubTree(root->left, keyRoot, keyLeft, keyRight) ||
+	       isSubTree(root->right, keyRoot, keyLeft, keyRight);
+}
+
 int32_t main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr);

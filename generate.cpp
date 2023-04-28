@@ -30,7 +30,7 @@ int32_t main() {
     freopen("Makefile", "w", stdout);
     string s;
     cin >> s;
-    cout << "run:\n";
+    cout << "ext:\n";
     vector<option> options {
             { 1, "\tg++ -std=c++17 -Ofast -O2 -O3 -m64 -Wall -Wextra -march=native -finline-functions -funroll-loops "
                  "-unroll-loops " + s + ".cpp -o " + s },

@@ -1,0 +1,5 @@
+#!/bin/zsh
+autoload colors && colors
+g++ -std=c++17 -Ofast -O2 -O3 -m64 -Wall -Wextra -march=native -finline-functions -funroll-loops -unroll-loops try.cpp -o try
+echo $fg[green] "DONE"
+ echo $fg[white] "" && ./try
