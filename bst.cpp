@@ -331,6 +331,15 @@ bool isSubTree(Node *root, int keyRoot, int keyLeft, int keyRight) {
 	       isSubTree(root->right, keyRoot, keyLeft, keyRight);
 }
 
+int getTreeHeight(Node *root) {
+	if (root != nullptr) {
+		int left = getTreeHeight(root->left) + 1;
+		int right = getTreeHeight(root->right) + 1;
+		return left > right ? left : right;
+	}
+	return 0;
+}
+
 int32_t main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr);
