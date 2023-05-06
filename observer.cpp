@@ -28,9 +28,12 @@ public:
 	void addObserver(Observer *obs) {
 		cout << "Add observer" << '\n';
 		observers = obs;
+		this->notify();
 	}
 	void removeObserver(Observer *obs) {
 		cout << "Remove observer" << '\n';
+		observers = obs;
+		this->notify();
 	}
 
 	void notify() {
@@ -51,7 +54,6 @@ int32_t main() {
 	for (int i = 0; i < n; i++) {
 		b->addObserver(obs[i]);
 		b->removeObserver(obs[i]);
-		b->notify();
 	}
 
 }

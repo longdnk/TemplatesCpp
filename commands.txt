@@ -1,2 +1,10 @@
 echo. > "file_name"
 @type "file_1" > "file_2"
+Node Left Right
+Left Node Right
+Left Right Node
+Right Node Left
+
+Pre-order: Node -> Left -> Right
+In-order: Left -> Node -> Right
+Post-order: Left -> Right -> Node
