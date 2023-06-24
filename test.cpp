@@ -8,6 +8,8 @@ struct Node {
     Node *right;
 };
 
+Node *createNode(int x);
+
 void insertNode(Node *&root, int k) {
     if (root == NULL) {
         root = createNode(k);
@@ -42,7 +44,7 @@ Node *searchTree(Node *root, int k) {
     }
 }
 
-Node *searchTree(Node *root, int k) {
+Node *searchNode(Node *root, int k) {
     Node *p = root;
     while (p != NULL && p->key != k) {
         if (p->key > k) {
@@ -88,6 +90,9 @@ Node *findMinOddX(Node *root, int x) {
     }
     return findMinOddX(root->right, x);
 }
+
+int remove(Node *&root, int x);
+Node *findSuccessor(Node *tmp);
 
 int removeNode(Node *&root, int k) {
     Node *tmp = searchTree(root, k);
@@ -138,6 +143,8 @@ void printLeafs(Node *root) {
     }
 }
 
+bool validBST(Node *root, int left, int right) ;
+
 bool checkBST(Node *root) {
     if (root == NULL) {
         return false;
@@ -155,6 +162,8 @@ bool validBST(Node *root, int left, int right) {
     return validBST(root->left, left, root->key) && validBST(root->right, root->key, right);
 }
 
+bool validEvenTree(Node *root);
+
 bool checkEvenTree(Node *root) {
     if (root == NULL) {
         return false;
@@ -171,6 +180,8 @@ bool validEvenTree(Node *root) {
     }
     return validEvenTree(root->left) && validEvenTree(root->right);
 }
+
+bool checkSubTree(Node *root, Node *subRoot);
 
 bool isSubTree(Node *root, Node *subRoot) {
     if (checkSubTree(root, subRoot)) {
@@ -195,6 +206,8 @@ bool checkSubTree(Node *root, Node *subRoot) {
     return checkSubTree(root->left, subRoot->left) && checkSubTree(root->right, subRoot->right);
 }
 
+void createBST(Node *root, Node *&tmp, int left, int right);
+
 Node *trimBST(Node *root, int low, int high) {
     Node *tmp = NULL;
     createBST(root, tmp, low, high);
@@ -211,6 +224,8 @@ void createBST(Node *root, Node *&tmp, int left, int right) {
     createBST(root->left, tmp, left, right);
     createBST(root->right, tmp, left, right);
 }
+
+void traversal(Node *root, int *cnt);
 
 bool isUniqueTree(Node *root) {
     if (root == NULL) {
