@@ -1,5 +1,5 @@
 #!/bin/zsh
 autoload colors && colors
-g++ -std=c++17 -Ofast -O2 -O3 -m64 -Wall -Wextra -march=native -finline-functions -funroll-loops -unroll-loops testcase.cpp -o testcase
+g++ -std=c++17 -Ofast -O2 -O3 -m64 -Wall -Wextra -march=native -finline-functions -funroll-loops -unroll-loops test.cpp -o test
 echo $fg[green] "DONE"
- echo $fg[white] "" && ./testcase
+echo $fg[white] "" && ./test
