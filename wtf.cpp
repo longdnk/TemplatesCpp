@@ -1,140 +1,68 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
-struct Node {
-	int key;
-	Node *next;
-	Node *prev;
-
-	Node() = default;
-
-	Node(int x) : key(x), next(nullptr), prev(nullptr) { }
-};
-
-struct List {
-	Node *head;
-	Node *tail;
-
-	List() : head(nullptr), tail(nullptr) { }
-};
-
-void displayList(List *&ls) {
-	if (ls->head == nullptr) {
-		return;
-	}
-
-	Node *current = ls->head;
-	do {
-		cout << current->key << " -> ";
-		current = current->next;
-	} while (current != ls->head);
-
-	cout << '\n';
-
-	Node *p = ls->tail;
-	do {
-		cout << p->key << " -> ";
-		p = p->prev;
-	} while (p != ls->tail);
+void printPath(const vector<int> &path) {
+    for (int node : path) {
+        cout << node << " ";
+    }
+    cout << "\n";
 }
 
-void addToHead(List *&ls, int val) {
-	Node *p = new Node(val);
-	if (ls->head == nullptr) {
-		ls->head = ls->tail = p;
-		p->next = p->prev = p;
-	}
-	else {
-		p->next = ls->head;
-		p->prev = ls->head->prev;
-		ls->head->prev->next = p;
-		ls->head->prev = p;
-		ls->head = p;
-	}
+bool dfs(int current, int destination, vector<vector<int>> &adj, vector<bool> &visited, vector<int> &parent) {
+    visited[current] = true;
+
+    if (current == destination) {
+        vector<int> path;
+        while (current != -1) {
+            path.push_back(current);
+            current = parent[current];
+        }
+        reverse(path.begin(), path.end());
+        cout << path.size() - 1 << '\n';
+        printPath(path);
+        return true;
+    }
+
+    for (int neighbor : adj[current]) {
+        if (!visited[neighbor]) {
+            parent[neighbor] = current;
+            if (dfs(neighbor, destination, adj, visited, parent)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
-void addToTail(List *&ls, int val) {
-	Node *p = new Node(val);
-	if (ls->head == nullptr) {
-		ls->head = ls->tail = p;
-		p->next = p->prev = p;
-	}
-	else {
-		p->next = ls->head;
-		p->prev = ls->head->prev;
-		ls->head->prev->next = p;
-		ls->head->prev = p;
-		ls->tail = p;
-	}
+bool findPath(int source, int destination, vector<vector<int>> &adj) {
+    int n = adj.size();
+    vector<bool> visited(n, false);
+    vector<int> parent(n, -1);
+
+    return dfs(source, destination, adj, visited, parent);
 }
 
-bool addAfter(List *&ls, int prevValue, int val) {
-	if (ls->head != nullptr) {
-		Node *prevNode = ls->head;
-		bool flag = false;
-		while (prevNode != nullptr && prevNode->key != prevValue) {
-			prevNode = prevNode->next;
-		}
-		if (prevNode != nullptr) {
-			Node *p = new Node(val);
-			p->next = prevNode->next;
-			p->prev = prevNode;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-			prevNode->next = p;
-			p->next->prev = p;
+    int n, m, s, t;
+    cin >> n >> m >> s >> t;
 
-			if (prevNode == ls->tail) {
-				ls->tail = p;
-			}
-			flag = true;
-		}
-		return flag;
-	}
-	return false;
-}
+    vector<vector<int>> adj(n + 1);
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].emplace_back(v);
+        adj[v].emplace_back(u);
+    }
 
-bool addBefore(List *&ls, int v, int k) {
-	if (ls->head != nullptr) {
-		Node *prevNode = ls->head;
-		bool flag = false;
-		while (prevNode != nullptr && prevNode->key != v) {
-			prevNode = prevNode->next;
-		}
-		if (prevNode != nullptr) {
-			Node *prev = prevNode->prev;
-			if (prev == ls->tail) {
-				addToHead(ls, k);
-			}
-			else {
-				Node *p = new Node(k);
-				p->next = prevNode->next;
-				p->prev = prevNode;
-				prevNode->next = p;
-				p->next->prev = p;
-			}
-			flag = true;
-		}
-		return flag;
-	}
-	return false;
-}
+    bool check = findPath(s, t, adj);
+    if (!check) {
+        cout << "-1" << '\n';
+    }
 
-int32_t main() {
-	ios::sync_with_stdio(false);
-	cin.tie(nullptr);
-	cout.tie(nullptr);
-	List *ls = new List;
-//	addToHead(ls, 10);
-//	addToHead(ls, 20);
-//	addToHead(ls, 30);
-//	addToHead(ls, 40);
-//	displayList(ls);
-	addToTail(ls, 10);
-	addToTail(ls, 20);
-	addToTail(ls, 30);
-	addToTail(ls, 40);
-	addAfter(ls, 40, 60);
-	addBefore(ls, 40, 50);
-	displayList(ls);
+    return 0;
 }

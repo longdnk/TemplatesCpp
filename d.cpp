@@ -1,70 +1,49 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-#define null NULL
 
-struct QNode {
-    int key;
-    QNode *next;
-};
+int n, m;
+vector<vector<int>> a;
+const int maxN = 1e5 + 9;
+bool check[maxN];
 
-struct Queue {
-    struct QNode *front, *rear;
-};
+void dfs(int u) {
+	check[u] = true;
+	for (auto item: a[u]) {
+		if (!check[item]) {
+			dfs(item);
+		}
+	}
+}
+
+//void bfs(int s) {
+//	queue<int> q;
+//	q.push(s);
+//	check[s] = true;
+//	while (!q.empty()) {
+//		int u = q.front();
+//		cout << u << ' ';
+//		q.pop();
+//		for (auto x: a[u]) {
+//			if (!check[x]) {
+//				check[x] = true;
+//				q.push(x);
+//			}
+//		}
+//	}
+//}
 
 int32_t main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-
-    auto initQueue = [&](Queue *&q) -> void {
-        q = new Queue;
-        q->front = q->rear = null;
-    };
-
-    auto enQueue = [&](Queue *&q, int k) -> void {
-
-        auto createElement = [&](int k) -> QNode * {
-            auto *temp = new QNode;
-            temp->key = k;
-            temp->next = null;
-            return temp;
-        };
-
-        QNode *temp = createElement(k);
-
-        if (q->rear == null) {
-            q->front = q->rear = temp;
-            return;
-        }
-
-        q->rear->next = temp;
-        q->rear = temp;
-    };
-
-    auto deQueue = [&](Queue *&q) -> void {
-        if (q->front == null) {
-            return;
-        }
-
-        QNode *temp = q->front;
-
-        q->front = q->front->next;
-
-        if (q->front == null) {
-            q->rear = null;
-        }
-
-        delete (temp);
-    };
-
-    Queue *q;
-    initQueue(q);
-    enQueue(q, 10);
-    enQueue(q, 20);
-    enQueue(q, 30);
-    while (q->front != null) {
-        cout << q->front->key << '\n';
-        deQueue(q);
-    }
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	cout.tie(nullptr);
+	cin >> n >> m;
+	a = vector<vector<int>>(n + 1);
+	for (int i = 1, u, v; i <= m; ++i) {
+		cin >> u >> v;
+		a[u].emplace_back(v);
+		a[v].emplace_back(u);
+	}
+//	dfs(1);
+//	bfs(1);
 }

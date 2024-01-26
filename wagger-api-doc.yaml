@@ -1,0 +1,232 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ziot/hoang-linh/1.0.0
+  - url: http://103.161.173.166:9000
+info:
+  description: This is EneZ document API of enez.ziot.vn
+  version: "1.0.0"
+  title: API document
+tags:
+  - name: Login
+    description: Login user
+  - name: Dashboard config 
+    description: Dashboard infomation
+  - name: Site 
+    description: Site config 
+  - name: Inverter 
+    description: Display inverter 
+  - name: Location
+    description: location arggis
+paths:
+  /pecc/login:
+    patch:
+      tags:
+        - Login
+      summary: Login user account
+      operationId: login
+      requestBody:
+        description: Login data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: demo@email.com
+                password:
+                  type: string
+                  example: 123456
+      responses:
+        "401":
+          description: infomation is not match
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 40019
+                  message:
+                    type: string
+                    example: "Email or password is incorrect"
+
+        "202":
+          description: login success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    example: 202 
+                  message:
+                    type: string
+                    example: Login successed
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: 659f8d851804b80da6bc276e
+                      name:
+                        type: string
+                        example: PECC demo
+                      email:
+                        type: string
+                        example: demo@email.com
+                      portfolio:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 6294ec58876f1480e8dac400
+                          name:
+                            type: string
+                            example: ENEZ PORTFOLIO
+                  token:
+                      type: string
+                      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwODdlYjg2NTc1ODM1NThmODhlNTIiLCJpYXQiOjE3MDQ0MzA0ODMsImV4cCI6MTczNTk2NjQ4M30.cgrmPHPBphB48X5DeU-vCbWTnf4M7jexSrFJftXMYk4
+  /pecc/dashboard:
+    get:
+      tags:
+        - Dashboard config 
+      operationId: technical-monitoring
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number 
+            example: 1
+        - in: query
+          name: siteId 
+          schema:
+            type: string
+            example: "null" 
+        - in: query
+          name: plantId 
+          schema:
+            type: string
+            example: "null"
+
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /pecc/site:
+    get:
+      tags:
+        - Site 
+      operationId: technical-monitoring-site-update
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: 62b087eb8657583558f88e52
+        - in: query
+          name: type
+          schema:
+            type: string
+            example: searchList
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /pecc/inverter/{plantId}:
+    get:
+      tags:
+        - Inverter 
+      operationId: technical-monitoring-site-detail
+      parameters:
+        - in: path
+          required: true
+          name: plantId 
+          schema:
+            type: string
+            example: "65a738b0e42782c2b143a1d5"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /pecc/inverter/{plantId}/detail:
+    get:
+      tags:
+        - Inverter 
+      operationId: technical-monitoring-plant-detail
+      parameters:
+        - in: path
+          required: true
+          name: plantId 
+          schema:
+            type: string
+            example: "65a738b0e42782c2b143a1d5"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /service/geo-data:
+    get:
+      tags:
+        - Location 
+      operationId: technical-monitoring-plants
+      parameters:
+        - in: query 
+          required: true
+          name: country 
+          schema:
+            type: string
+            example: "canada"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+components:
+  securitySchemes:
+    authorization: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Logindata:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: phuchong94@gmail.com
+        password:
+          type: string
+          example: "123456"
+    Manufacturer:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ACME Corporation
+        homePage:
+          type: string
+          format: url
+          example: "https://www.acme-corp.com"
+        phone:
+          type: string
+          example: 408-867-5309
+      type: object
+security:
+  - authorization:
+      [
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwODdlYjg2NTc1ODM1NThmODhlNTIiLCJpYXQiOjE3MDQ0MzA0ODMsImV4cCI6MTczNTk2NjQ4M30.cgrmPHPBphB48X5DeU-vCbWTnf4M7jexSrFJftXMYk4,
+      ]

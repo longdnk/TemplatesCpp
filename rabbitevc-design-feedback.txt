@@ -1,0 +1,70 @@
+TỔNG QUAN
+- Các nút xác nhận, size to so với những icon của app => mất cân đối về design
+- Padding quá dày => những thiết bị màn hình độ phân giải thấp sẽ khó nhìn.
+- Cần thêm ligh-mode, bởi vì dùng app sạc điều kiện ngoài trời nắng nên dark-mode thỉnh thoảng sẽ khó nhìn.
+- Thiếu pop-up cho phép truy cập vị trí
+
+SIGN IN - SIGN UP
+1. LOGO bị mất chữ "RABBIT EVC"
+2. Pop-up thông báo đky nhìn thô quá, giống Web hơn là app, điều chỉnh thành notify nhỏ lại.
+3. Chỉnh pop-up OTP thành screen mới, hiện pop-up nhìn chật chội quá
+4. Thiếu mục chính sách & điều khoản.
+5. Thiếu box "ghi nhớ thông tin đăng nhập"
+
+HOME
+1. Thông tin "KM còn lại" và "% PIN còn lại" app mình không show được, thay đổi thành mục khác
+2. KHông có thanh tìm kiếm trạm sạc
+3. Chỗ hiển thị điểm, không có lable hiển thị chú thích => user không biết đó là gì cả
+4. Màn hình home thiếu mục danh sách các bài news
+5. Màn hình home nên hiển thị các menu chức năng của APP chứ không nên làm giống app cũ là show danh sách trạm sạc.
+Muốn xem trạm sạc thì bấm vào thanh tìm kiếm trạm sạc. (Tham khảo các app nước ngoài khác, hoặc trong nước có TNGO)
+
+NẠP ĐIỂM
+1. Phần chú thích "Điểm của bạn = .... VND" đem xuống dưới thay vì để trên đầu. Text size cũng nhỏ xuống để tiết kiệm khoảng trống thông tin quan trọng khác
+2. Size của các mục chọn phương thức thanh toán size to, padding quá dày, điều chỉnh lại cho phù hợp
+3. Thiếu màn hình khi thanh toán thành công / Thất bại / Hết hạn thanh toán
+
+LỊCH SỬ
+1. Chia làm 4 tab cho từng loại: SẠC XE - BIẾN ĐỘNG ĐIỂM - ĐẶT CHỖ - THÔNG BÁO
+2. Item trong list size chữ to, padding quá dày
+3. Item đã hiển thị ICON thì không cần phải show thêm lable "THANH TOÁN HOÁ ĐƠN" hoặc "NẠP ĐIỂM", thay vào đó là 1 đoạn text có ý nghĩa hơn như "Thanh toán hoá đơn #### thành công."
+4. Filter chỉ có mốc thời gian là không đúng, phải là 1 khoảng thời gian
+5. Trạng thái filter cần riêng biệt cho từng tab
+6. Các item cần gắn badge ID giống tab "Sạc xe" để giúp khách hàng dễ dàng thông báo khi có sự cố
+
+ĐIỂM SẠC - TRỤ SẠC
+1. TAB "TRỤ SẠC"
+- Banner thiếu thông tin tổng quan của trạm: Khoảng cách, Số lượng trụ đang online, Tgian mở cửa
+- Thiếu thông tin cổng sạc.
+- Đang giống UX Cũ có vấn đề nghiêm trọng.
+Khi 1 trạm sạc có nhiều trụ (4 trụ), mỗi trụ có 8 vòi sạc 
+    => Dẫn đến việc bất tiện cho user khi scroll quá nhiều
+    => Cần điều chỉnh lại kích cỡ từng item, hình ảnh của vòi thay bằng icon nhỏ hơn. 
+    => Điều chỉnh lại UX sao cho hợp lý hơn
+2. TAB "THÔNG TIN" - Thiếu Email, sđt
+3. TAB "ĐÁNH GIÁ" - Thiếu box điền nội dung đánh giá.
+
+CHARGING
+1. Thiếu alert confirm mỗi khi user click button.
+2. Đổi icon "Setting" ở lable "Thông tin phiên sạc", thay vào đó icon "Info" hợp lý hơn
+3. Thiếu màn: Trạng thái sạc, lý do stop.
+4. Thiếu màn hình tình huống trụ bị lỗi / Offline => Hiển thị cho user biết để họ không sạc
+
+BADGE STATUS
+1. Đổi nội dung text "Xế yêu ...." sao cho ngắn gọn hơn
+2. Thêm thông số có ích hơn: Tgian sạc, nhiệt độ, công suât, điện tiêu thụ
+VD "⏰ 01:15"
+3. Thêm bage thông báo có 1 phiên sạc chưa thanh toán: ID Phiên sạc, giá tiền.
+
+TRẠM SẠC - MAP
+1. Thiếu thông tin số trụ sạc đang available của mỗi trạm sạc trên bản đồ. VD: 3 online, 1 offline
+2. Search box tìm kiếm: Hiển thị đầy đủ địa chỉ của trạm, hiện tại đang bị khuất -> User không xem đc địa chỉ của trạm sạc
+
+PROFILE
+1. Thiếu mục: cài đặt, thông tin phiên bản ứng dụng, chính sách & điều khoản, menu đổi ngôn ngữ
+2. Chỉnh sửa thông tin cá nhân: Nút "Lưu" sao lại đặt tí xíu ở góc phải ?? Sao không làm giống tab đổi mật khẩu ?
+
+ĐANG SẠC
+1. Cần có hình ảnh model xe theo profile của khách hàng đăng ký.
+VD: Tesla Model S 2018 => hiện Model tesla
+    Honda CRV => hiện Honda CRV

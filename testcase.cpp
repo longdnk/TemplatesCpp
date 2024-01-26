@@ -1,11 +1,7 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 
 using namespace std;
 
-template <class T>
-void check(T s) {
-	cout << "\033[32m" << s << "\033[0m" << '\n';
-}
 template <class T>
 struct Node {
     int key;
@@ -14,37 +10,63 @@ struct Node {
     Node *pParent;
 };
 
-Node<class T> *createNode(int k) {
-    Node<T> *p = new Node<T>;
-    p->key = k;
-    p->pLeft = p->pRight = p->pParent = NULL;
-    return p;
-}
+Node<class T> *createNode(int x);
+bool insert(Node<T> *&root, int k, Node<T> *parent);
+void insertNode(Node<T> *&root, int k);
+Node<T> *convertArrayToTree(int a[], int n);
+Node<T> *findSuccessor(Node<T> *tmp);
+void traversal(Node<T> *root);
+int remove(Node<T> *&root);
+int removeNode(Node<T> *&root, int k);
 
-void insert(Node<T> *&root, int value, Node<T> *&parent) {
-    Node<T> *p = createNode(value);
-    if (root == NULL) {
-        p->pParent = parent;
-        root = p;
-    }
-    if (root->key == value) {
-        return;
-    }
-    else if (root->key > value) {
-        insert(root->pLeft, value, root);
-    }
-    else {
-        insert(root->pRight, value, root);
-    }
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    int a[] = {8, 10, 3, 1, 6, 14, 4, 7, 13};
+    int n = sizeof(a) / sizeof(a[0]);
+    Node<T> *root = convertArrayToTree(a, n);
+    removeNode(root, 13);
+    traversal(root);
 }
 
 void insertNode(Node<T> *&root, int k) {
-    Node<T> *tmp = NULL;
-    insert(root, k, tmp);
+    insert(root, k, root);
+}
+
+bool insert(Node<T> *&root, int k, Node<T> *parent) {
+    if (root == nullptr) {
+        Node<T> *p = createNode(k);
+        if (p == nullptr) {
+            return false;
+        }
+        p->pParent = parent;
+        root = p;
+        return true;
+    }
+    if (root->key == k) {
+        return false;
+    }
+    else if (root->key > k) {
+        return insert(root->pLeft, k, root);
+    }
+    else {
+        return insert(root->pRight, k, root);
+    }
+}
+
+Node<class T> *createNode(int x) {
+    Node<T> *p = new Node<T>;
+    if (p == nullptr) {
+        return nullptr;
+    }
+    p->key = x;
+    p->pLeft = p->pRight = p->pParent = nullptr;
+    return p;
 }
 
 Node<T> *convertArrayToTree(int a[], int n) {
-    Node<T> *root = NULL;
+    Node<T> *root = nullptr;
     for (int i = 0; i < n; ++i) {
         insertNode(root, a[i]);
     }
@@ -52,7 +74,7 @@ Node<T> *convertArrayToTree(int a[], int n) {
 }
 
 Node<T> *searchTree(Node<T> *root, int k) {
-    if (root == NULL || root->key == k) {
+    if (root == nullptr || root->key == k) {
         return root;
     }
     else if (root->key > k) {
@@ -63,87 +85,81 @@ Node<T> *searchTree(Node<T> *root, int k) {
     }
 }
 
-Node<T> *searchValue(Node<T> *root, int k) {
-    Node<T> *p = root;
-    while (p != NULL && p->key != k) {
-        if (p->key > k) {
-            p = p->pLeft;
-        }
-        else {
-            p = p->pRight;
-        }
-    }
-    return p;
-}
-
-void deleteNode(Node<T> *&root, int x) {
-    Node<T> *p = root;
-    Node<T> *parent = NULL;
-    while (p != NULL && p->key != x) {
-        parent = p;
-        if (p->key > x) {
-            p = p->pLeft;
-        }
-        else {
-            p = p->pRight;
-        }
-    }
-    if (p != NULL) {
-        // 2 sub tree
-        if (p->pLeft != NULL && p->pRight != NULL) {
-            parent = p;
-            Node<T> *t = p->pRight;
-            while (t->pLeft != NULL) {
-                parent = t;
-                t = t->pLeft;
-            }
-            p->key = t->key;
-            p = t;
-        }
-        Node<T> *r = NULL;
-        if (p->pLeft == NULL) {
-            r = p->pRight;
-        }
-        else {
-            r = p->pLeft;
-        }
-        // is root node
-        if (parent == NULL) {
-            root = r;
-        }
-        // 1 sub or leaf
-        else {
-            if (parent->key > p->key) {
-                parent->pLeft = r;
-            }
-            else {
-                parent->pRight = r;
-            }
-            r->pParent = parent;
-        }
-        delete p;
-    }
-}
+// Node<T> *searchTree(Node<T> *root, int k) {
+//     Node<T> *p = root;
+//     while (p != nullptr && p->key != k) {
+//         if (p->key > k) {
+//             p = p->pLeft;
+//         }
+//         else {
+//             p = p->pRight;
+//         }
+//     }
+//     return p;
+// }
 
 int removeNode(Node<T> *&root, int k) {
-    if (searchValue(root, k) != NULL) {
-        deleteNode(root, k);
-        return 1;
+    Node<T> *tmp = searchTree(root, k);
+    if (tmp == nullptr) {
+        return 0;
     }
-    return 0;
+    return remove(tmp);
 }
 
-void output(Node<T> *root) {
-    if (root == NULL) {
+int remove(Node<T> *&root) {
+    if (root->pLeft == nullptr && root->pRight == nullptr) { // Leaf
+        if (root->key < (root->pParent)->key) {
+            (root->pParent)->pLeft = nullptr;
+        }
+        else {
+            (root->pParent)->pRight = nullptr;
+        }
+        root = nullptr;
+        delete root;
+    }
+    else if (root->pLeft == nullptr || root->pRight == nullptr) { // 1 Sub tree
+        if (root->key < (root->pParent)->key) {
+            (root->pParent)->pLeft = root->pRight ?: root->pLeft;
+            if (root->pLeft) {
+                (root->pLeft)->pParent = root->pParent;
+            }
+            else {
+                (root->pRight)->pRight = root->pParent;
+            }
+        }
+        else {
+            (root->pParent)->pRight = root->pLeft ?: root->pRight;
+            if (root->pLeft) {
+                (root->pLeft)->pParent = root->pParent;
+            }
+            else {
+                (root->pRight)->pParent = root->pParent;
+            }
+        }
+        root = nullptr;
+        delete root;
+    }
+    else { // 2 Sub + Root
+        Node<T> *successor = findSuccessor(root);
+        root->key = successor->key;
+        return removeNode(root->pRight, successor->key);
+    }
+    return 1;
+}
+
+Node<T> *findSuccessor(Node<T> *tmp) {
+    tmp = tmp->pRight;
+    while (tmp->pLeft) {
+        tmp = tmp->pLeft;
+    }
+    return tmp;
+}
+
+void traversal(Node<T> *root) {
+    if (root == nullptr) {
         return;
     }
-    output(root->pLeft);
-    output(root->pRight);
-    cout << root->key << ' ' << (root->pParent ? root->pParent->key : 0) << '\n';
-}
-
-int32_t main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+    cout << root->key << ' ' << (root->pParent ? (root->pParent)->key : 0) << '\n';
+    traversal(root->pLeft);
+    traversal(root->pRight);
 }

@@ -1,0 +1,816 @@
+openapi: 3.0.0
+servers:
+  - url: https://backend.ziot.vn:5005/fontend
+info:
+  description: This is EneZ document API of enez.ziot.vn
+  version: "1.0.0"
+  title: API document
+tags:
+  - name: Login
+    description: Login user
+  - name: Technical Monitoring + Asset Performance + Tool/Analysis
+  - name: Billing
+    description: Data for billing
+  - name: Configuration
+    description: Config portfolio, billing, monitoring rule
+  - name: Tool - report
+    description: Tool/report api
+paths:
+  /user/login:
+    post:
+      tags:
+        - Login
+      summary: Login user account
+      operationId: login
+      requestBody:
+        description: Login data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: demo@gmail.com
+                password:
+                  type: string
+                  example: 123456
+      responses:
+        "401":
+          description: infomation is not match
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 40019
+                  message:
+                    type: string
+                    example: "Email or password is incorrect"
+
+        "200":
+          description: login success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: Login successed
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: 62b087eb8657583558f88e52
+                      name:
+                        type: string
+                        example: Trương Hồng Phúc
+                      email:
+                        type: string
+                        example: phuchong94@gmail.com
+                      portfolio:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 6294ec58876f1480e8dac400
+                          name:
+                            type: string
+                            example: ENEZ PORTFOLIO
+                          logoUrl:
+                            type: string
+                            example: null
+                  meta:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwODdlYjg2NTc1ODM1NThmODhlNTIiLCJpYXQiOjE3MDQ0MzA0ODMsImV4cCI6MTczNTk2NjQ4M30.cgrmPHPBphB48X5DeU-vCbWTnf4M7jexSrFJftXMYk4
+                      role:
+                        type: string
+                        example: SA
+                      permissions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: 62af0403862aff2f2be59409
+                            name:
+                              type: string
+                              example: technical-monitoring
+                            route:
+                              type: string
+                              example: technical-monitoring
+  /overview/plants:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring
+      parameters:
+        - in: query
+          name: siteId
+          schema:
+            type: string
+            example: "null"
+        - in: query
+          name: type
+          schema:
+            type: string
+            example: "overview"
+
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /overview/sites-update:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring-site-update
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: 62b087eb8657583558f88e52
+        - in: query
+          name: type
+          schema:
+            type: string
+            example: searchList
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /events:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring-events
+      parameters:
+        - in: query
+          name: siteId
+          schema:
+            type: string
+            example: "null"
+        - in: query
+          name: plantId
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /overview/plants-data:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring-overview-data
+      parameters:
+        - in: query
+          name: siteId
+          schema:
+            type: string
+            example: "null"
+        - in: query
+          name: type
+          schema:
+            type: string
+            example: "overview"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /events/{eventId}:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring-events-detail
+      parameters:
+        - in: path
+          required: true
+          name: eventId
+          schema:
+            type: string
+            example: "633e9e88c5ca50cc398a2956"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /sites/{siteId}:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring-site-detail
+      parameters:
+        - in: path
+          required: true
+          name: siteId
+          schema:
+            type: string
+            example: "63f399c59b590f56b257a453"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /plants/{plantId}:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring-plant-detail
+      parameters:
+        - in: path
+          required: true
+          name: plantId
+          schema:
+            type: string
+            example: "63f39b0ab2b34f54aff169a2"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /plants/{plantId}/detail:
+    get:
+      tags:
+        - Technical Monitoring + Asset Performance + Tool/Analysis
+      operationId: technical-monitoring-plant-detail-actions
+      parameters:
+        - in: path
+          required: true
+          name: plantId
+          schema:
+            type: string
+            example: "63f39b0ab2b34f54aff169a2"
+        - in: query
+          name: from
+          schema:
+            type: string
+            example: 2024-01-04 15:51:25
+        - in: query
+          name: to
+          schema:
+            type: string
+            example: 2024-01-05 15:51:25
+        - in: query
+          name: groupBy
+          schema:
+            type: string
+            example: "hour"
+        - in: query
+          name: dataType
+          schema:
+            type: string
+            example: "actual_production_and_irradiation"
+        - in: query
+          name: param
+          schema:
+            type: string
+            example: ""
+        - in: query
+          name: deviceCode
+          schema:
+            type: string
+            example: ""
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /billing/{billingId}:
+    get:
+      tags:
+        - Billing
+      operationId: billing-detail
+      parameters:
+        - in: path
+          required: true
+          name: billingId
+          schema:
+            type: string
+            example: "63f39b0ab2b34f54aff169a2"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /billing/{billingId}/cost-trend:
+    get:
+      tags:
+        - Billing
+      operationId: billing-detail-costrend
+      parameters:
+        - in: path
+          required: true
+          name: billingId
+          schema:
+            type: string
+            example: "63f39b0ab2b34f54aff169a2"
+        - in: query
+          name: from
+          schema:
+            type: string
+            example: 2024-01-01 00:00:00
+        - in: query
+          name: to 
+          schema:
+            type: string
+            example: 2024-01-05 16:03:34
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /billing/{billingId}/invoice:
+    get:
+      tags:
+        - Billing
+      operationId: billing-detail-invoice
+      parameters:
+        - in: path
+          required: true
+          name: billingId
+          schema:
+            type: string
+            example: "63f39b0ab2b34f54aff169a2"
+        - in: query
+          name: from
+          schema:
+            type: string
+            example: 2024-01-01 00:00:00
+        - in: query
+          name: to 
+          schema:
+            type: string
+            example: 2024-01-05 16:03:34
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /billing/{billingId}/invoice/{invoiceId}:
+    get:
+      tags:
+        - Billing
+      operationId: billing-detail-invoice-with-id
+      parameters:
+        - in: path
+          required: true
+          name: billingId
+          schema:
+            type: string
+            example: "63f39b0ab2b34f54aff169a2"
+        - in: path
+          required: true
+          name: invoiceId 
+          schema:
+            type: string
+            example: "6591b328333083b295726909"
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /portfolio/{plantId}:
+    get:
+      tags:
+        - Configuration
+      operationId: config-portfolio
+      parameters:
+        - in: path
+          required: true
+          name: plantId 
+          schema:
+            type: string
+            example: 6294ec58876f1480e8dac400
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /billing/{plantId}/billing-scheme:
+    get:
+      tags:
+        - Configuration
+      operationId: config-billing-scheme
+      parameters:
+        - in: path
+          required: true
+          name: plantId
+          schema:
+            type: string
+            example: 6294ec58876f1480e8dac400
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /devices:
+    get:
+      tags:
+        - Configuration
+      operationId: config-rule-get-device
+      parameters:
+        - in: query
+          name: plantId
+          required: true
+          schema:
+            type: string
+            example: 63f39b0ab2b34f54aff169a2
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /rule-conditions:
+    get:
+      tags:
+        - Configuration
+      operationId: config-rule-get-condition
+      parameters:
+        - in: query
+          name: plantId
+          required: true
+          schema:
+            type: string
+            example: 63f39b0ab2b34f54aff169a2
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /rules:
+    get:
+      tags:
+        - Configuration
+      summary: Get all rule from plant
+      operationId: config-rule-get
+      parameters:
+        - in: query
+          name: plantId
+          required: true
+          schema:
+            type: string
+            example: 63f39b0ab2b34f54aff169a2
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+    post: 
+      tags: 
+        - Configuration
+      summary: Create new rule 
+      operationId: config-rule-create
+      responses:
+        "201":
+          description: create data success
+        "401":
+          description: authorization error
+        "400":
+          description: invalid data 
+      requestBody:
+        description: Rule data 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                devices:
+                  type: string
+                  example: ["63f39cb7b2b34f54aff169a9", "63f39cc0b2b34f54aff169aa", "63f39cc8b2b34f54aff169ab", "63f39cccb2b34f54aff169ac"]
+                isActive: 
+                  type: number
+                  example: 1
+                message: 
+                  type: string
+                  example: ""
+                name:
+                  type: string
+                  example: 'No string current #5'
+                otherEmails:
+                  type: string
+                  example: ""
+                recipients: 
+                  type: string
+                  example: []
+                reportMethods:
+                  type: string
+                  example: ["email"]
+                ruleField:
+                  type: string
+                  example: kwh
+                ruleOperator:
+                  type: string
+                  example: ==
+                ruleTime:
+                  type: string
+                  example: "RT"
+                ruleType:
+                  type: number 
+                  example: 1
+                severity:
+                  type: number
+                  example: 120
+                value: 
+                  type: number
+                  example: 1
+                startCheckTime:
+                  type: string
+                  example: "00:00"
+                endCheckTime:
+                  type: string
+                  example: "23:30"
+                plantId: 
+                  type: string
+                  example: "63f39b0ab2b34f54aff169a2"
+  /rules/{ruleId}:
+    get:
+      tags:
+        - Configuration
+      summary: Get rule detail 
+      operationId: config-rule-get-update
+      parameters:
+        - in: path 
+          required: true
+          name: ruleId
+          schema:
+            type: string
+            example: "null" 
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+        "400":
+          description: invalid data 
+    post:
+      tags:
+        - Configuration
+      operationId: config-rule-update
+      summary: Update rule 
+      parameters:
+        - in: path 
+          required: true
+          name: ruleId
+          schema:
+            type: string
+            example: "null" 
+      responses:
+        "200":
+          description: Edit data success
+        "401":
+          description: authorization error
+        "400":
+          description: invalid data
+      requestBody:
+        description: Rule data 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                devices:
+                  type: string
+                  example: ["63f39cb7b2b34f54aff169a9", "63f39cc0b2b34f54aff169aa", "63f39cc8b2b34f54aff169ab", "63f39cccb2b34f54aff169ac"]
+                isActive: 
+                  type: number
+                  example: 1
+                message: 
+                  type: string
+                  example: ""
+                name:
+                  type: string
+                  example: 'No string current #5'
+                otherEmails:
+                  type: string
+                  example: ""
+                recipients: 
+                  type: string
+                  example: []
+                reportMethods:
+                  type: string
+                  example: ["email"]
+                ruleField:
+                  type: string
+                  example: kwh
+                ruleOperator:
+                  type: string
+                  example: ==
+                ruleTime:
+                  type: string
+                  example: "RT"
+                ruleType:
+                  type: number 
+                  example: 1
+                severity:
+                  type: number
+                  example: 120
+                value: 
+                  type: number
+                  example: 1
+                startCheckTime:
+                  type: string
+                  example: "00:00"
+                endCheckTime:
+                  type: string
+                  example: "23:30"
+                plantId: 
+                  type: string
+                  example: "63f39b0ab2b34f54aff169a2"
+    delete:
+      tags:
+        - Configuration
+      summary: Delete rule 
+      operationId: config-rule-delete
+      parameters:
+        - in: path 
+          required: true
+          name: ruleId
+          schema:
+            type: string
+            example: "null" 
+      responses:
+        "200":
+          description: Delete data success
+        "401":
+          description: authorization error
+        "400":
+          description: invalid data
+  /reports: 
+    get:
+      tags:
+        - Tool - report
+      operationId: report-list
+      parameters:
+        - in: query
+          required: true
+          name: plantId 
+          schema:
+            type: string
+            example: 63f39b0ab2b34f54aff169a2 
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /reports/{typeId}:
+    get:
+      tags:
+        - Tool - report
+      operationId: report-group-list
+      parameters:
+        - in: path 
+          required: true
+          name: typeId
+          schema:
+            type: string
+            example: 63fc528370f8b225e9b2bf45 
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+    put:
+      tags:
+        - Tool - report
+      operationId: report-update-config
+      parameters:
+        - in: path 
+          required: true
+          name: typeId
+          schema:
+            type: string
+            example: 63fc528370f8b225e9b2bf45 
+      requestBody:
+        description: Rule data 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activeAutomatic:
+                  type: boolean
+                  example: false
+                fileType:
+                  type: string
+                  example: ["PDF", "EXCEL"]
+                pattern: 
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      example: "WEEKLY"
+                    value:
+                      type: object
+                      properties:
+                        days: 
+                          type: string
+                          example: ["monday"]
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+  /reports/{typeId}/download:
+    get:
+      tags: 
+        - Tool - report
+      operationId: report-export
+      parameters:
+        - in: path 
+          required: true
+          name: typeId 
+          schema:
+            type: string
+            example: 63fc528370f8b225e9b2bf45 
+        - in: query 
+          required: false 
+          name: plantId 
+          schema:
+            type: string
+            example: 63f39b0ab2b34f54aff169a2  
+        - in: query 
+          required: false 
+          name: from 
+          schema:
+            type: string 
+            example: 2024-01-01 00:00:00
+        - in: query 
+          required: false 
+          name: to 
+          schema:
+            type: string 
+            example: 2024-01-08 23:59:59
+        - in: query 
+          required: false 
+          name: groupBy 
+          schema:
+            type: string 
+            example: month
+        - in: query
+          required: false 
+          name: reportType 
+          schema:
+            type: string 
+            example: PDF 
+      responses:
+        "200":
+          description: get data success
+        "401":
+          description: authorization error
+components:
+  securitySchemes:
+    authorization: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Logindata:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: phuchong94@gmail.com
+        password:
+          type: string
+          example: "123456"
+    Manufacturer:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ACME Corporation
+        homePage:
+          type: string
+          format: url
+          example: "https://www.acme-corp.com"
+        phone:
+          type: string
+          example: 408-867-5309
+      type: object
+security:
+  - authorization:
+      [
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwODdlYjg2NTc1ODM1NThmODhlNTIiLCJpYXQiOjE3MDQ0MzA0ODMsImV4cCI6MTczNTk2NjQ4M30.cgrmPHPBphB48X5DeU-vCbWTnf4M7jexSrFJftXMYk4,
+      ]
